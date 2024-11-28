@@ -1,4 +1,2 @@
 
-URL pour l'interface admin du service url shortener (IP PORT)
-
-http://24.199.88.59:4447/_/#/collections?collection=pbc_526993055
+Docker hub page https://hub.docker.com/repository/docker/shellking4/shorty-master/general

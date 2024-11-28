@@ -8,6 +8,9 @@ import (
 	"github.com/pocketbase/pocketbase/apis"
     "github.com/pocketbase/pocketbase/core"
 	"github.com/teris-io/shortid"
+	"crypto/rand"
+	"encoding/base64"
+	"strings"
 )
 
 type UrlShortenRequest struct {
@@ -40,7 +43,9 @@ func registerUrlShortenerRoutes(app *pocketbase.PocketBase) {
 			}
 
 			// Generate short code
-			shortCode := generateShortCode()
+			// shortCode := generateShortCode()
+			shortCode := generateUniqueCode()
+
 
 			// Prepare collection
 			collection, err := app.FindCollectionByNameOrId("shortened_urls")
@@ -126,6 +131,25 @@ func isValidURL(str string) bool {
 func generateShortCode() string {
 	// Using shortid to generate a unique, short identifier
 	return shortid.MustGenerate()
+}
+
+func generateUniqueCode() string {
+	// Generate 24 random bytes
+	b := make([]byte, 30)
+	_, err := rand.Read(b)
+	if err != nil {
+		return ""
+	}
+	
+	// Convert to base64 and make URL-safe
+	code := base64.URLEncoding.EncodeToString(b)
+	
+	// Remove padding and replace URL-unsafe characters
+	code = strings.TrimRight(code, "=")
+	code = strings.ReplaceAll(code, "+", "-")
+	code = strings.ReplaceAll(code, "/", "_")
+	
+	return code
 }
 
 // In your main initialization
