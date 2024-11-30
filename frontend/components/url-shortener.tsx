@@ -12,14 +12,13 @@ import { Link, Copy, Loader2 } from 'lucide-react';
 import { getAuthToken } from '@/lib/auth';
 import { API_CONFIG } from '@/lib/constants';
 import { useToast } from '@/hooks/use-toast';
-import { Toaster } from './ui/toaster';
+import { Toaster, toast } from 'sonner';
 
 export function UrlShortener() {
   const [token, setToken] = useState<string>('');
   const [shortUrl, setShortUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
-  const { toast } = useToast();
 
   const { register, handleSubmit, formState: { errors } } = useForm<ShortenRequest>({
     resolver: zodResolver(urlSchema),
@@ -28,7 +27,7 @@ export function UrlShortener() {
   useEffect(() => {
     getAuthToken()
       .then(setToken)
-      .catch(() => toast({ title: 'Failed to initialize service', description: 'Please try again later.' }))
+      .catch(() => toast.error('Failed to initialize service'))
       .finally(() => setIsInitializing(false));
   }, []);
 
@@ -50,9 +49,9 @@ export function UrlShortener() {
       
       const json = await response.json();
       setShortUrl(json.short_url);
-      toast({ title: 'URL shortened successfully!', description: 'Your URL has been shortened and is ready to be shared.' });
+      toast.success('URL shortened successfully!');
     } catch (error) {
-      toast({ title: 'Failed to shorten URL', description: 'Please try again later.' });
+      toast.error('Failed to shorten URL');
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
@@ -62,9 +61,9 @@ export function UrlShortener() {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shortUrl);
-      toast({ title: 'Copied to clipboard!', description: 'Your URL has been copied to the clipboard.' });
+      toast.success('Copied to clipboard!');
     } catch (err) {
-      toast({ title: 'Failed to copy to clipboard', description: 'Please try again later.' });
+      toast.error('Failed to copy to clipboard');
     }
   };
 
@@ -81,7 +80,6 @@ export function UrlShortener() {
 
   return (
     <Card className="w-full max-w-md p-6 backdrop-blur-xl bg-black/20 border-white/10 shadow-2xl">
-      <Toaster />
       <div className="flex flex-col items-center space-y-2 mb-6">
         <div className="p-3 rounded-full bg-primary/10">
           <Link className="h-8 w-8 text-primary" />
@@ -90,7 +88,7 @@ export function UrlShortener() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="url" className="text-gray-300">URL to Shorten</Label>
+          <Label htmlFor="url" className="text-gray-300">URL to shorten</Label>
           <Input
             id="url"
             type="url"
