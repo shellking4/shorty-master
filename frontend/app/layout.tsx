@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'ShortMe - URL Shortener by Metatronicx',
-  description: 'Transform your long URLs into short, shareable links with ShortMe™',
+  description: 'Transform your long URLs into short, shareable links with ShortMe',
   icons: {
     icon: '/images/favicon.ico',
   },
