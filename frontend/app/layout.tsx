@@ -7,8 +7,8 @@ import { Footer } from '@/components/layout/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Shorty Master - URL Shortener by Metatronicx',
-  description: 'Transform your long URLs into short, shareable links with ShortyMaster™',
+  title: 'ShortMe - URL Shortener by Metatronicx',
+  description: 'Transform your long URLs into short, shareable links with ShortMe™',
   icons: {
     icon: '/images/favicon.ico',
   },

@@ -10,7 +10,7 @@ export default function Home() {
       <div className="container relative mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <PageHeader 
-            title="ShortyMaster"
+            title="ShortMe™"
             description="Transform your long URLs into short, shareable links in seconds"
           />
           <div className="flex justify-center">
